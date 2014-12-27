@@ -7,6 +7,17 @@ ray/oauth-module
 
 ### Composer install
 
+```composer.json
+{
+	"repositories": [
+		{
+			"type": "vcs",
+			"url": "https://github.com/kawanamiyuu/Ray.OAuthModule"
+		}
+	]
+}
+```
+
 ```bash
 $ composer require ray/oauth-module
 ```
