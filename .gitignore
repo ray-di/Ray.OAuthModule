@@ -1,5 +1,4 @@
 .idea
-Ray.TwitterOAuthModule.iml
 vendor
 composer.lock
-
+Ray.OAuthModule.iml
