@@ -1,6 +1,6 @@
 <?php
 
-namespace Ray\OAuthModule\OAuth1;
+namespace Ray\OAuthModule;
 
 use OAuth\OAuth1\Service\Twitter;
 

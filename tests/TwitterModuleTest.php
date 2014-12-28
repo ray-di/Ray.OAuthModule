@@ -1,6 +1,6 @@
 <?php
 
-namespace Ray\OAuthModule\OAuth1\Module;
+namespace Ray\OAuthModule;
 
 use OAuth\OAuth1\Service\Twitter;
 use Ray\Di\Injector;
@@ -13,4 +13,4 @@ class TwitterModuleTest extends \PHPUnit_Framework_TestCase
 		$instance = (new Injector($module, $_ENV['TMP_DIR']))->getInstance(Twitter::class);
 		$this->assertInstanceOf(Twitter::class, $instance);
 	}
-} 
+}
