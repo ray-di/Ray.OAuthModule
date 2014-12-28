@@ -23,9 +23,9 @@ abstract class AbstractModule extends AbstractDiModule
     private $oAuthClient;
 
     /**
-     * @param string $consumerKey    Consumer Key
-     * @param string $consumerSecret Consumer Secret
-     * @param string $oAuthCallbackPath  Callback URL Path
+     * @param string $consumerKey       Consumer Key
+     * @param string $consumerSecret    Consumer Secret
+     * @param string $oAuthCallbackPath Callback URL Path
      */
     public function __construct($consumerKey, $consumerSecret, $oAuthCallbackPath)
     {
