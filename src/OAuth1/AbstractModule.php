@@ -8,39 +8,39 @@ use Ray\Di\Scope;
 
 abstract class AbstractModule extends AbstractDiModule
 {
-	/**
-	 * @var string
-	 */
-	protected $serviceClass;
+    /**
+     * @var string
+     */
+    protected $serviceClass;
 
-	/**
-	 * @var ServiceInterface
-	 */
-	private $oAuthClient;
+    /**
+     * @var ServiceInterface
+     */
+    private $oAuthClient;
 
-	/**
-	 * @param string $consumerKey    Consumer Key
-	 * @param string $consumerSecret Consumer Secret
-	 * @param string $oAuthCallbackPath  Callback URL Path
-	 */
-	public function __construct($consumerKey, $consumerSecret, $oAuthCallbackPath)
-	{
-		// trim namespace
-		$serviceName = substr(strrchr($this->serviceClass, "\\"), 1);
+    /**
+     * @param string $consumerKey    Consumer Key
+     * @param string $consumerSecret Consumer Secret
+     * @param string $oAuthCallbackPath  Callback URL Path
+     */
+    public function __construct($consumerKey, $consumerSecret, $oAuthCallbackPath)
+    {
+        // trim namespace
+        $serviceName = substr(strrchr($this->serviceClass, "\\"), 1);
 
-		$this->oAuthClient = (new ClientFactory)->createClient(
-			$serviceName,
-			$consumerKey,
-			$consumerSecret,
-			$oAuthCallbackPath
-		);
-	}
+        $this->oAuthClient = (new ClientFactory)->createClient(
+            $serviceName,
+            $consumerKey,
+            $consumerSecret,
+            $oAuthCallbackPath
+        );
+    }
 
-	/**
-	 * {@inheritdoc}
-	 */
-	protected function configure()
-	{
-		$this->bind($this->serviceClass)->toInstance($this->oAuthClient)->in(Scope::SINGLETON);
-	}
+    /**
+     * {@inheritdoc}
+     */
+    protected function configure()
+    {
+        $this->bind($this->serviceClass)->toInstance($this->oAuthClient)->in(Scope::SINGLETON);
+    }
 }

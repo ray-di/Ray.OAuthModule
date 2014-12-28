@@ -7,18 +7,18 @@ use Ray\Di\Di\Inject;
 
 trait TwitterInject
 {
-	/**
-	 * @var Twitter
-	 */
-	protected $twitterOAuthClient;
+    /**
+     * @var Twitter
+     */
+    protected $twitterOAuthClient;
 
-	/**
-	 * @param Twitter $twitter
-	 *
-	 * @Inject
-	 */
-	public function setTwitterOAuthClient(Twitter $twitter)
-	{
-		$this->twitterOAuthClient = $twitter;
-	}
-} 
+    /**
+     * @param Twitter $twitter
+     *
+     * @Inject
+     */
+    public function setTwitterOAuthClient(Twitter $twitter)
+    {
+        $this->twitterOAuthClient = $twitter;
+    }
+}

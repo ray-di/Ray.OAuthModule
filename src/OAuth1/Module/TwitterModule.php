@@ -7,5 +7,5 @@ use Ray\OAuthModule\OAuth1\AbstractModule;
 
 class TwitterModule extends AbstractModule
 {
-	protected $serviceClass = Twitter::class;
+    protected $serviceClass = Twitter::class;
 }

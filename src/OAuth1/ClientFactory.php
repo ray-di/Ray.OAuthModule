@@ -10,31 +10,31 @@ use OAuth\ServiceFactory;
 
 final class ClientFactory
 {
-	/**
-	 * @param string $serviceName       Service Name
-	 * @param string $consumerKey       Consumer Key
-	 * @param string $consumerSecret    Consumer Secret
-	 * @param string $oAuthCallbackPath Callback URL Path
-	 *
-	 * @return ServiceInterface
-	 */
-	public function createClient($serviceName, $consumerKey, $consumerSecret, $oAuthCallbackPath)
-	{
-		$callbackUrl = $this->createCallbackURL($oAuthCallbackPath);
-		$credentials = new Credentials($consumerKey, $consumerSecret, $callbackUrl);
-		return (new ServiceFactory)->createService($serviceName, $credentials, new Session());
-	}
+    /**
+     * @param string $serviceName       Service Name
+     * @param string $consumerKey       Consumer Key
+     * @param string $consumerSecret    Consumer Secret
+     * @param string $oAuthCallbackPath Callback URL Path
+     *
+     * @return ServiceInterface
+     */
+    public function createClient($serviceName, $consumerKey, $consumerSecret, $oAuthCallbackPath)
+    {
+        $callbackUrl = $this->createCallbackURL($oAuthCallbackPath);
+        $credentials = new Credentials($consumerKey, $consumerSecret, $callbackUrl);
+        return (new ServiceFactory)->createService($serviceName, $credentials, new Session());
+    }
 
-	/**
-	 * @param string $oAuthCallbackPath Callback URL Path
-	 *
-	 * @return string
-	 */
-	public function createCallbackURL($oAuthCallbackPath)
-	{
-		$uri = (new UriFactory)->createFromSuperGlobalArray($_SERVER);
-		$uri->setPath($oAuthCallbackPath);
-		$uri->setQuery('');
-		return $uri->getAbsoluteUri();
-	}
-} 
+    /**
+     * @param string $oAuthCallbackPath Callback URL Path
+     *
+     * @return string
+     */
+    public function createCallbackURL($oAuthCallbackPath)
+    {
+        $uri = (new UriFactory)->createFromSuperGlobalArray($_SERVER);
+        $uri->setPath($oAuthCallbackPath);
+        $uri->setQuery('');
+        return $uri->getAbsoluteUri();
+    }
+}
