@@ -78,7 +78,7 @@ class Auth extends ResourceObject
  
 ## Other Services?
 
-If you need [other service](https://github.com/Lusitanian/PHPoAuthLib/tree/master/src/OAuth/OAuth1/Service) module, for example "Tumblr", 
+If you need other [OAuth1](https://github.com/Lusitanian/PHPoAuthLib/tree/master/src/OAuth/OAuth1/Service)/[OAuth2](https://github.com/Lusitanian/PHPoAuthLib/tree/master/src/OAuth/OAuth2/Service) service module, for example "Tumblr" (OAuth1), 
 
 1. Add TumblrModle class and TumblrInject trait.
 
