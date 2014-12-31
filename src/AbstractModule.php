@@ -6,7 +6,7 @@
  */
 namespace Ray\OAuthModule;
 
-use OAuth\OAuth1\Service\ServiceInterface;
+use OAuth\Common\Service\ServiceInterface;
 use Ray\Di\AbstractModule as AbstractDiModule;
 use Ray\Di\Scope;
 
@@ -26,8 +26,9 @@ abstract class AbstractModule extends AbstractDiModule
      * @param string $consumerKey       Consumer Key
      * @param string $consumerSecret    Consumer Secret
      * @param string $oAuthCallbackPath Callback URL Path
+     * @param array  $scopes            Scopes (for OAuth2)
      */
-    public function __construct($consumerKey, $consumerSecret, $oAuthCallbackPath)
+    public function __construct($consumerKey, $consumerSecret, $oAuthCallbackPath, array $scopes = [])
     {
         // trim namespace
         $serviceName = substr(strrchr($this->serviceClass, "\\"), 1);
@@ -36,7 +37,8 @@ abstract class AbstractModule extends AbstractDiModule
             $serviceName,
             $consumerKey,
             $consumerSecret,
-            $oAuthCallbackPath
+            $oAuthCallbackPath,
+            $scopes
         );
     }
 
