@@ -24,11 +24,11 @@ $ composer require ray/oauth-module
  
 ### Module install
 
-**e.g. [TwitterModule](https://github.com/kawanamiyuu/Ray.OAuthModule/blob/master/src/OAuth1/Module/TwitterModule.php)**
+**e.g. TwitterModule**
 
 ```php
 use Ray\Di\AbstractModule;
-use Ray\OAuthModule\OAuth1\Module\TwitterModule;
+use Ray\OAuthModule\Twitter\TwitterModule;
 
 class AppModule extends AbstractModule
 {
@@ -44,11 +44,11 @@ class AppModule extends AbstractModule
 ```
 ### DI trait
 
-**e.g. [TwitterInject](https://github.com/kawanamiyuu/Ray.OAuthModule/blob/master/src/OAuth1/Inject/TwitterInject.php)**
+**e.g. TwitterInject**
 
 ```php
 use BEAR\Resource\ResourceObject;
-use Ray\OAuthModule\OAuth1\Inject\TwitterInject;
+use Ray\OAuthModule\Twitter\TwitterInject;
 
 class Auth extends ResourceObject
 {
