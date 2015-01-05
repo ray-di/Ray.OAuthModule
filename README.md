@@ -24,11 +24,11 @@ $ composer require ray/oauth-module
  
 ### Module install
 
-**e.g. [TwitterModule](https://github.com/kawanamiyuu/Ray.OAuthModule/blob/master/src/OAuth1/Module/TwitterModule.php)**
+**e.g. TwitterModule**
 
 ```php
 use Ray\Di\AbstractModule;
-use Ray\OAuthModule\OAuth1\Module\TwitterModule;
+use Ray\OAuthModule\Twitter\TwitterModule;
 
 class AppModule extends AbstractModule
 {
@@ -44,11 +44,11 @@ class AppModule extends AbstractModule
 ```
 ### DI trait
 
-**e.g. [TwitterInject](https://github.com/kawanamiyuu/Ray.OAuthModule/blob/master/src/OAuth1/Inject/TwitterInject.php)**
+**e.g. TwitterInject**
 
 ```php
 use BEAR\Resource\ResourceObject;
-use Ray\OAuthModule\OAuth1\Inject\TwitterInject;
+use Ray\OAuthModule\Twitter\TwitterInject;
 
 class Auth extends ResourceObject
 {
@@ -78,7 +78,7 @@ class Auth extends ResourceObject
  
 ## Other Services?
 
-If you need [other service](https://github.com/Lusitanian/PHPoAuthLib/tree/master/src/OAuth/OAuth1/Service) module, for example "Tumblr", 
+If you need other [OAuth1](https://github.com/Lusitanian/PHPoAuthLib/tree/master/src/OAuth/OAuth1/Service)/[OAuth2](https://github.com/Lusitanian/PHPoAuthLib/tree/master/src/OAuth/OAuth2/Service) service module, for example "Tumblr" (OAuth1), 
 
 1. Add TumblrModle class and TumblrInject trait.
 
