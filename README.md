@@ -7,17 +7,6 @@ ray/oauth-module
 
 ### Composer install
 
-```composer.json
-{
-	"repositories": [
-		{
-			"type": "vcs",
-			"url": "https://github.com/kawanamiyuu/Ray.OAuthModule"
-		}
-	]
-}
-```
-
 ```bash
 $ composer require ray/oauth-module
 ```
@@ -36,7 +25,6 @@ class AppModule extends AbstractModule
 	{
 		// Callback URL Path of your application
 		$callbackUrlPath = '/oauth/twitter/callback';
-
 		$this->install(new TwitterModule('{YOUR_CONSUMER_KEY}', '{YOUR_CONSUMER_SECRET}', $callbackUrlPath);
 	}
 }
@@ -47,26 +35,24 @@ class AppModule extends AbstractModule
 **e.g. TwitterInject**
 
 ```php
-use BEAR\Resource\ResourceObject;
+
 use Ray\OAuthModule\Twitter\TwitterInject;
 
-class Auth extends ResourceObject
+class AuthController extends AbstractController
 {
-	use TwitterInject;
-
-	public function onGet()
-	{
-		$requestToken = $this->twitterOAuthClient->requestRequestToken()->getRequestToken();
-
-		$url = $this->twitterOAuthClient->getAuthorizationUri([
-			'oauth_token' => $requestToken,
-			'force_login' => 'true',
-		]);
-
-		// redirect to Twitter authorize URL
-		header('Location:' . $url);
-		exit;
-	}
+    use TwitterInject;
+    
+    public function indexAction()
+    {
+        $requestToken = $this->twitterOAuthClient->requestRequestToken()->getRequestToken();
+        $url = $this->twitterOAuthClient->getAuthorizationUri([
+            'oauth_token' => $requestToken,
+            'force_login' => 'true'
+        ]);
+        // redirect to Twitter authorize URL
+        header('Location:' . $url);
+        exit(0);
+    }
 }
 
 ```
