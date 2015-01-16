@@ -10,9 +10,9 @@ use OAuth\Common\Consumer\Credentials;
 use OAuth\Common\Http\Uri\UriFactory;
 use OAuth\Common\Service\ServiceInterface;
 use OAuth\Common\Storage\Session;
-use OAuth\ServiceFactory;
+use OAuth\ServiceFactory as OAuthServiceFactory;
 
-final class ClientFactory
+class ServiceFactory
 {
     /**
      * @param string $serviceClass      Service Class Name
@@ -23,12 +23,12 @@ final class ClientFactory
      *
      * @return ServiceInterface
      */
-    public function createClient($serviceClass, $consumerKey, $consumerSecret, $oAuthCallbackPath, array $scopes = [])
+    public function createService($serviceClass, $consumerKey, $consumerSecret, $oAuthCallbackPath, array $scopes = [])
     {
         $serviceName = $this->trimNamespace($serviceClass);
         $callbackUrl = $this->createCallbackURL($oAuthCallbackPath);
         $credentials = new Credentials($consumerKey, $consumerSecret, $callbackUrl);
-        return (new ServiceFactory)->createService($serviceName, $credentials, new Session(), $scopes);
+        return (new OAuthServiceFactory)->createService($serviceName, $credentials, new Session(), $scopes);
     }
 
     /**

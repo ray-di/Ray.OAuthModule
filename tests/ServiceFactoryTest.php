@@ -7,11 +7,11 @@ use OAuth\OAuth2\Service\AbstractService as AbstractOAuth2Service;
 use OAuth\OAuth1\Service\Twitter;
 use OAuth\OAuth2\Service\Facebook;
 
-class ClientFactoryTest extends \PHPUnit_Framework_TestCase
+class ServiceFactoryTest extends \PHPUnit_Framework_TestCase
 {
-    public function testCreateOAuth1Client()
+    public function testCreateOAuth1Service()
     {
-        $client = (new ClientFactory)->createClient(
+        $client = (new ServiceFactory)->createService(
             Twitter::class,
             '{CONSUMER_KEY}',
             '{CONSUMER_SECRET}',
@@ -22,9 +22,9 @@ class ClientFactoryTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf(Twitter::class, $client);
     }
 
-    public function testCreateOAuth2Client()
+    public function testCreateOAuth2Service()
     {
-        $client = (new ClientFactory)->createClient(
+        $client = (new ServiceFactory)->createService(
             Facebook::class,
             '{CONSUMER_KEY}',
             '{CONSUMER_SECRET}',
@@ -38,13 +38,13 @@ class ClientFactoryTest extends \PHPUnit_Framework_TestCase
 
     public function testTrimNamespace()
     {
-        $result = (new ClientFactory)->trimNamespace(Twitter::class);
+        $result = (new ServiceFactory)->trimNamespace(Twitter::class);
         $this->assertEquals('Twitter', $result);
     }
 
     public function testCreateCallbackURL()
     {
-        $url = (new ClientFactory)->createCallbackURL('/oauth/twitter/callback');
+        $url = (new ServiceFactory)->createCallbackURL('/oauth/twitter/callback');
         $this->assertEquals('http://example.com/oauth/twitter/callback', $url);
     }
 }
