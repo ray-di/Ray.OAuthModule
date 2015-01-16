@@ -15,7 +15,7 @@ use OAuth\ServiceFactory;
 final class ClientFactory
 {
     /**
-     * @param string $serviceName       Service Name
+     * @param string $serviceClass      Service Class Name
      * @param string $consumerKey       Consumer Key
      * @param string $consumerSecret    Consumer Secret
      * @param string $oAuthCallbackPath Callback URL Path
@@ -23,11 +23,22 @@ final class ClientFactory
      *
      * @return ServiceInterface
      */
-    public function createClient($serviceName, $consumerKey, $consumerSecret, $oAuthCallbackPath, array $scopes = [])
+    public function createClient($serviceClass, $consumerKey, $consumerSecret, $oAuthCallbackPath, array $scopes = [])
     {
+        $serviceName = $this->trimNamespace($serviceClass);
         $callbackUrl = $this->createCallbackURL($oAuthCallbackPath);
         $credentials = new Credentials($consumerKey, $consumerSecret, $callbackUrl);
         return (new ServiceFactory)->createService($serviceName, $credentials, new Session(), $scopes);
+    }
+
+    /**
+     * @param string $fullyQualifiedClassName Fully Qualified Class Name
+     *
+     * @return string
+     */
+    public function trimNamespace($fullyQualifiedClassName)
+    {
+        return substr(strrchr($fullyQualifiedClassName, "\\"), 1);
     }
 
     /**

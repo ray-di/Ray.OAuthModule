@@ -30,11 +30,8 @@ abstract class AbstractModule extends AbstractDiModule
      */
     public function __construct($consumerKey, $consumerSecret, $oAuthCallbackPath, array $scopes = [])
     {
-        // trim namespace
-        $serviceName = substr(strrchr($this->serviceClass, "\\"), 1);
-
         $this->oAuthClient = (new ClientFactory)->createClient(
-            $serviceName,
+            $this->serviceClass,
             $consumerKey,
             $consumerSecret,
             $oAuthCallbackPath,

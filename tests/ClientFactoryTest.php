@@ -12,7 +12,7 @@ class ClientFactoryTest extends \PHPUnit_Framework_TestCase
     public function testCreateOAuth1Client()
     {
         $client = (new ClientFactory)->createClient(
-            'Twitter',
+            Twitter::class,
             '{CONSUMER_KEY}',
             '{CONSUMER_SECRET}',
             '{OAUTH_CALLBACK_URL}'
@@ -25,7 +25,7 @@ class ClientFactoryTest extends \PHPUnit_Framework_TestCase
     public function testCreateOAuth2Client()
     {
         $client = (new ClientFactory)->createClient(
-            'Facebook',
+            Facebook::class,
             '{CONSUMER_KEY}',
             '{CONSUMER_SECRET}',
             '{OAUTH_CALLBACK_URL}',
@@ -34,6 +34,12 @@ class ClientFactoryTest extends \PHPUnit_Framework_TestCase
 
         $this->assertInstanceOf(AbstractOAuth2Service::class, $client);
         $this->assertInstanceOf(Facebook::class, $client);
+    }
+
+    public function testTrimNamespace()
+    {
+        $result = (new ClientFactory)->trimNamespace(Twitter::class);
+        $this->assertEquals('Twitter', $result);
     }
 
     public function testCreateCallbackURL()
