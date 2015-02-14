@@ -6,7 +6,7 @@
 	"require": {
 		"php": ">=5.5.0",
 		"ray/di": "~2.0@dev",
-		"lusitanian/oauth": "~0.3"
+		"maye/oauth-client": "~1.0"
 	},
 	"require-dev": {
 		"phpunit/phpunit": "3.7.*"
