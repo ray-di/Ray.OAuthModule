@@ -1,9 +1,9 @@
 ray/oauth-module
 ================
 
-[![Build Status](https://travis-ci.org/Ray-Di/Ray.OAuthModule.svg?branch=master)](https://travis-ci.org/Ray-Di/Ray.OAuthModule)
+[![Build Status](https://travis-ci.org/ray-di/Ray.OAuthModule.svg?branch=master)](https://travis-ci.org/ray-di/Ray.OAuthModule)
 
-[OAuth](https://github.com/Lusitanian/PHPoAuthLib) Module for [Ray.Di](https://github.com/koriym/Ray.Di)
+[OAuth](https://github.com/Lusitanian/PHPoAuthLib) Module for [Ray.Di](https://github.com/ray-di/Ray.Di)
 
 ## Installation
 
