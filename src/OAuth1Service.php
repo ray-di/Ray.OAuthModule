@@ -8,5 +8,12 @@ namespace Ray\OAuthModule;
 
 class OAuth1Service
 {
+    /**
+     * Make a pull request if you need more services.
+     *
+     * the following services are available:
+     * https://github.com/Lusitanian/PHPoAuthLib/tree/master/src/OAuth/OAuth1/Service
+     */
+
     const TWITTER = 'Twitter';
 }

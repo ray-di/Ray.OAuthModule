@@ -21,7 +21,7 @@ class FakeOAuth1Consumer
      * @param OAuth1ClientInterface $client
      *
      * @Inject
-     * @Named("Twitter")
+     * @Named("twitter")
      */
     public function setClient(OAuth1ClientInterface $client)
     {

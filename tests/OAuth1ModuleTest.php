@@ -6,15 +6,14 @@
  */
 namespace Ray\OAuthModule;
 
-use Maye\OAuthClient\OAuth1Client;
 use Maye\OAuthClient\OAuth1ClientInterface;
 use Ray\Di\Injector;
 
-class OAuthModuleTest extends \PHPUnit_Framework_TestCase
+class OAuth1ModuleTest extends \PHPUnit_Framework_TestCase
 {
-    public function testOAuth1Client()
+    public function testOAuth1Module()
     {
-        $module = new OAuthModule(new OAuth1Client(OAuth1Service::TWITTER, 'ConsumerKey', 'ConsumerSecret', 'CallbackUrlPath'));
+        $module = new OAuth1Module(OAuth1Service::TWITTER, 'ConsumerKey', 'ConsumerSecret', 'CallbackUrlPath');
         $injector = (new Injector($module, $_ENV['TMP_DIR']));
         /** @var FakeOAuth1Consumer $consumer */
         $consumer = $injector->getInstance(FakeOAuth1Consumer::class);
