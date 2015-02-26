@@ -15,45 +15,83 @@ $ composer require ray/oauth-module
  
 ### Module install
 
-**e.g. TwitterModule**
+**OAuthServiceModule**
 
 ```php
 use Ray\Di\AbstractModule;
-use Ray\OAuthModule\Twitter\TwitterModule;
+use Ray\OAuthModule\OAuthServiceModule;
 
 class AppModule extends AbstractModule
 {
 	protected function configure()
 	{
-		// Callback URL Path of your application
-		$callbackUrlPath = '/oauth/twitter/callback';
-		$this->install(new TwitterModule('{YOUR_CONSUMER_KEY}', '{YOUR_CONSUMER_SECRET}', $callbackUrlPath);
+		// Twitter OAuth Configuration
+		$twConfig = new Configuration();
+		$twConfig->serviceName     = Twitter::class;
+		$twConfig->consumerKey     = $_ENV['TW_CONSUMER_KEY'];
+		$twConfig->consumerSecret  = $_ENV['TW_CONSUMER_SECRET'];
+		$twConfig->callbackUrlPath = '/oauth/callback/twitter';
+
+		// Facebook OAuth Configuration
+		$fbConfig = new Configuration();
+		$fbConfig->serviceName     = Facebook::class;
+		$fbConfig->consumerKey     = $_ENV['FB_CONSUMER_KEY'];
+		$fbConfig->consumerSecret  = $_ENV['FB_CONSUMER_SECRET'];
+		$fbConfig->callbackUrlPath = '/oauth/callback/twitter';
+
+		$configs = new ConfigurationCollection();
+		$configs[Twitter::class]  = $twConfig;
+		$configs[Facebook::class] = $fbConfig;
+
+		$this->install(new OAuthServiceModule($configs);
 	}
 }
 
 ```
 ### DI trait
 
-**e.g. TwitterInject**
+**OAuthServiceInject**
 
 ```php
 
-use Ray\OAuthModule\Twitter\TwitterInject;
+use OAuth\OAuth1\Service\Twitter;
+use OAuth\OAuth2\Service\Facebook;
+use Ray\OAuthModule\OAuthServiceInject;
 
 class AuthController extends AbstractController
 {
-    use TwitterInject;
+    use OAuthServiceInject;
     
-    public function indexAction()
+	/**
+	 * OAuth1 example
+	 */
+    public function twitterAction()
     {
-        $requestToken = $this->twitterOAuthClient->requestRequestToken()->getRequestToken();
-        $url = $this->twitterOAuthClient->getAuthorizationUri([
-            'oauth_token' => $requestToken,
-            'force_login' => 'true'
-        ]);
-        // redirect to Twitter authorize URL
-        header('Location:' . $url);
-        exit(0);
+		$twService = $this->getOAuthService(Twitter::class);
+
+		$requestToken = $twService->requestRequestToken()->getRequestToken();
+		$url = $twService->getAuthorizationUri([
+			'oauth_token' => $requestToken,
+			'force_login' => 'true'
+		]);
+
+		// redirect to Twitter authorize URL
+		header('Location:' . $url);
+		exit(0);
+    }
+
+	/**
+	 * OAuth2 example
+	 */
+    public function facebookAction()
+    {
+		$fbService = $this->getOAuthService(Facebook::class);
+
+		$url = $fbService->getAuthorizationUri();
+
+		// redirect to Facebook authorize URL
+		header('Location:' . $url);
+		exit(0);
     }
 }
 
@@ -63,11 +101,3 @@ class AuthController extends AbstractController
 
  * PHP 5.5+
  * hhvm
- 
-## Other Services?
-
-If you need other [OAuth1](https://github.com/Lusitanian/PHPoAuthLib/tree/master/src/OAuth/OAuth1/Service)/[OAuth2](https://github.com/Lusitanian/PHPoAuthLib/tree/master/src/OAuth/OAuth2/Service) service module, for example "Tumblr" (OAuth1), 
-
-1. Add TumblrModle class and TumblrInject trait.
-
-1. Send a Pull Request.
