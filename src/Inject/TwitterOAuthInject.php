@@ -10,12 +10,12 @@ use Maye\OAuthClient\OAuth1ClientInterface;
 use Ray\Di\Di\Inject;
 use Ray\Di\Di\Named;
 
-trait TwitterOAuthClientInject
+trait TwitterOAuthInject
 {
     /**
      * @var OAuth1ClientInterface
      */
-    protected $twitterOAuthClient;
+    protected $twitterOAuth;
 
     /**
      * @param OAuth1ClientInterface $client
@@ -23,8 +23,8 @@ trait TwitterOAuthClientInject
      * @Inject
      * @Named("twitter")
      */
-    public function setTwitterOAuthClientInject(OAuth1ClientInterface $client)
+    public function setTwitterOAuthInject(OAuth1ClientInterface $client)
     {
-        $this->twitterOAuthClient = $client;
+        $this->twitterOAuth = $client;
     }
 } 

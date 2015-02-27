@@ -41,6 +41,6 @@ class OAuth1Module extends AbstractModule
     {
         $named = strtolower($this->serviceName);
 
-        $this->bind(OAuth1ClientInterface::class)->annotatedWith($named)->toProvider(OAuth1ClientProvider::class)->in(Scope::SINGLETON);
+        $this->bind(OAuth1ClientInterface::class)->annotatedWith($named)->toProvider(OAuth1Provider::class)->in(Scope::SINGLETON);
     }
 }

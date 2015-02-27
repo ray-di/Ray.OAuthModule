@@ -11,7 +11,7 @@ use Maye\OAuthClient\OAuth1ClientInterface;
 use Ray\Di\ProviderInterface;
 use Ray\OAuthModule\Annotation\OAuth1Config;
 
-class OAuth1ClientProvider implements ProviderInterface
+class OAuth1Provider implements ProviderInterface
 {
     /**
      * @var array
