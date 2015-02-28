@@ -23,7 +23,7 @@ class OAuth1Provider implements ProviderInterface
      *
      * @OAuth1Config
      */
-    public function __construct(array $config = [])
+    public function __construct(array $config)
     {
         $this->config = $config;
     }
