@@ -16,4 +16,8 @@ class OAuth2Service
      */
 
     const FACEBOOK = 'Facebook';
+
+    const GIT_HUB = 'GitHub';
+
+    const GOOGLE = 'Google';
 }
