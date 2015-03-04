@@ -1,9 +1,9 @@
-ray/oauth-module
+Ray.OAuthModule
 ================
 
 [![Build Status](https://travis-ci.org/Ray-Di/Ray.OAuthModule.svg?branch=master)](https://travis-ci.org/Ray-Di/Ray.OAuthModule)
 
-[OAuth](https://github.com/Lusitanian/PHPoAuthLib) Module for [Ray.Di](https://github.com/koriym/Ray.Di)
+[OAuth](https://github.com/kawanamiyuu/Maye.OAuthClient) Module for [Ray.Di](https://github.com/koriym/Ray.Di)
 
 ## Installation
 
@@ -15,59 +15,87 @@ $ composer require ray/oauth-module
  
 ### Module install
 
-**e.g. TwitterModule**
-
 ```php
 use Ray\Di\AbstractModule;
-use Ray\OAuthModule\Twitter\TwitterModule;
+use Ray\OAuthModule\OAuth1Module;
+use Ray\OAuthModule\OAuth1Service;
 
 class AppModule extends AbstractModule
 {
 	protected function configure()
 	{
-		// Callback URL Path of your application
-		$callbackUrlPath = '/oauth/twitter/callback';
-		$this->install(new TwitterModule('{YOUR_CONSUMER_KEY}', '{YOUR_CONSUMER_SECRET}', $callbackUrlPath);
+		$this->install(new OAuth1Module(OAuth1Service::TWITTER, $_ENV['CONSUMER_KEY'], $_ENV['CONSUMER_SECRET'], '/callback/twitter'));
 	}
 }
-
 ```
-### DI trait
 
-**e.g. TwitterInject**
+### Usage
+
+Redirects to the authorization page.
 
 ```php
+use Ray\OAuthModule\Inject\TwitterOAuthInject;
 
-use Ray\OAuthModule\Twitter\TwitterInject;
-
-class AuthController extends AbstractController
+class RedirectController
 {
-    use TwitterInject;
+	use TwitterOAuthInject;
     
-    public function indexAction()
-    {
-        $requestToken = $this->twitterOAuthClient->requestRequestToken()->getRequestToken();
-        $url = $this->twitterOAuthClient->getAuthorizationUri([
-            'oauth_token' => $requestToken,
-            'force_login' => 'true'
-        ]);
-        // redirect to Twitter authorize URL
-        header('Location:' . $url);
-        exit(0);
-    }
+	public function twitterAction()
+	{
+		// redirects to Twitter authorization page
+		$this->twitterOAuth->authorize();
+		exit;
+	}
 }
-
 ```
 
-### Requiuments
+Requests the AccessToken.
+(callback process after authorization finished)
 
- * PHP 5.5+
- * hhvm
- 
-## Other Services?
+```php
+use Ray\OAuthModule\Inject\TwitterOAuthInject;
 
-If you need other [OAuth1](https://github.com/Lusitanian/PHPoAuthLib/tree/master/src/OAuth/OAuth1/Service)/[OAuth2](https://github.com/Lusitanian/PHPoAuthLib/tree/master/src/OAuth/OAuth2/Service) service module, for example "Tumblr" (OAuth1), 
+class CallbackController
+{
+	use TwitterOAuthInject;
 
-1. Add TumblrModle class and TumblrInject trait.
+	public function twitterAction()
+	{
+		$oauthToken    = $_GET['oauth_token'];
+		$oauthVerifier = $_GET['oauth_verifier'];
+		$denied = $_GET['denied'];
 
-1. Send a Pull Request.
+		if ($denied) {
+			// should be handled as error
+			return;
+		}
+
+		// requests AccessToken
+		$token = $this->twitterOAuth->requestAccessToken($oauthToken, $oauthVerifier);
+		/** @var OAuth\OAuth1\Token\TokenInterface $token */
+
+		// $accessToken       = $token->getAccessToken();
+		// $accessTokenSecret = $token->getAccessTokenSecret();
+		$userId = $token->getExtraParams()['user_id'];
+		// $screenName = $token->getExtraParams()['screen_name'];
+
+		// gets the authorized user info
+		$result = $this->twitterOAuth->api('get', 'users/show.json', ['user_id' => $userId]);
+		$result = json_decode($result);
+
+		$name = $result->name;
+	}
+}
+```
+
+## Demo
+
+```php
+$ php docs/demo/run.php
+// It works!
+```
+
+### Requirements
+
+* PHP 5.5+
+* hhvm
