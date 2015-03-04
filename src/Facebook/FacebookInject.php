@@ -25,4 +25,4 @@ trait FacebookInject
     {
         $this->facebookOAuthClient = $facebook;
     }
-} 
+}

@@ -12,4 +12,4 @@ use Ray\OAuthModule\AbstractModule;
 class FacebookModule extends AbstractModule
 {
     protected $serviceClass = Facebook::class;
-} 
+}

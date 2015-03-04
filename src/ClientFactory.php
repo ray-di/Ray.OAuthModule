@@ -27,6 +27,7 @@ final class ClientFactory
     {
         $callbackUrl = $this->createCallbackURL($oAuthCallbackPath);
         $credentials = new Credentials($consumerKey, $consumerSecret, $callbackUrl);
+
         return (new ServiceFactory)->createService($serviceName, $credentials, new Session(), $scopes);
     }
 
@@ -40,6 +41,7 @@ final class ClientFactory
         $uri = (new UriFactory)->createFromSuperGlobalArray($_SERVER);
         $uri->setPath($oAuthCallbackPath);
         $uri->setQuery('');
+
         return $uri->getAbsoluteUri();
     }
 }

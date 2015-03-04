@@ -14,4 +14,4 @@ class FacebookModuleTest extends \PHPUnit_Framework_TestCase
         $instance = (new Injector($module, $_ENV['TMP_DIR']))->getInstance(Facebook::class);
         $this->assertInstanceOf(Facebook::class, $instance);
     }
-} 
+}
