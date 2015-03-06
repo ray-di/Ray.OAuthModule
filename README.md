@@ -24,7 +24,7 @@ class AppModule extends AbstractModule
 {
 	protected function configure()
 	{
-		$this->install(new OAuth1Module(OAuth1Service::TWITTER, $_ENV['CONSUMER_KEY'], $_ENV['CONSUMER_SECRET'], '/callback/twitter'));
+		$this->install(new OAuth1Module(OAuth1Service::TWITTER, $_ENV['CONSUMER_KEY'], $_ENV['CONSUMER_SECRET'], '/oauth/callback'));
 	}
 }
 ```
@@ -36,63 +36,86 @@ Redirects to the authorization page.
 ```php
 use Ray\OAuthModule\Inject\TwitterOAuthInject;
 
-class RedirectController
+class OAuthController
 {
-	use TwitterOAuthInject;
-    
-	public function twitterAction()
-	{
-		// redirects to Twitter authorization page
-		$this->twitterOAuth->authorize();
-		exit;
-	}
+    use TwitterOAuthInject;
+
+    public function redirectAction()
+    {
+        $this->twitterOAuth->authorize();
+    }
 }
 ```
 
 Requests the AccessToken.
-(callback process after authorization finished)
+This is callback process after authorization finished.
 
 ```php
 use Ray\OAuthModule\Inject\TwitterOAuthInject;
 
-class CallbackController
+class OAuthController
 {
-	use TwitterOAuthInject;
+    use TwitterOAuthInject;
 
-	public function twitterAction()
-	{
-		$oauthToken    = $_GET['oauth_token'];
-		$oauthVerifier = $_GET['oauth_verifier'];
-		$denied = $_GET['denied'];
+    public function callbackAction()
+    {
+        if ($_GET['denied']) {
+            // should be handled as error
+            return 'ERROR';
+        }
 
-		if ($denied) {
-			// should be handled as error
-			return;
-		}
+        // requests AccessToken
+        $token = $this->twitterOAuth->requestAccessToken($_GET['oauth_token'], $_GET['oauth_verifier']);
+        /** @var OAuth\OAuth1\Token\TokenInterface $token */
 
-		// requests AccessToken
-		$token = $this->twitterOAuth->requestAccessToken($oauthToken, $oauthVerifier);
-		/** @var OAuth\OAuth1\Token\TokenInterface $token */
+        // $accessToken       = $token->getAccessToken();
+        // $accessTokenSecret = $token->getAccessTokenSecret();
+        $userId     = $token->getExtraParams()['user_id'];
+        $screenName = $token->getExtraParams()['screen_name'];
 
-		// $accessToken       = $token->getAccessToken();
-		// $accessTokenSecret = $token->getAccessTokenSecret();
-		$userId = $token->getExtraParams()['user_id'];
-		// $screenName = $token->getExtraParams()['screen_name'];
+        // gets authorized user info
+        $user = $this->twitterOAuth->api('get', 'users/show.json', ['user_id' => $userId]);
+        $user = json_decode($user);
 
-		// gets the authorized user info
-		$result = $this->twitterOAuth->api('get', 'users/show.json', ['user_id' => $userId]);
-		$result = json_decode($result);
+        $result = 'user_id : ' . $userId .'<br />';
+        $result.= 'screen_name : @' . $screenName . '<br />';
+        $result.= 'name: ' . $user->name;
 
-		$name = $result->name;
-	}
+        return $result;
+    }
 }
 ```
 
 ## Demo
 
+#### OAuth1 (Twitter)
+
+See ```docs/demo/www/oauth1_twitter.php``` for detail.
+
 ```php
-$ php docs/demo/run.php
-// It works!
+# 1. Create and configure the Twitter App on Developer Website
+
+# 2. Set Consumer Key and Secret in docs/demo/www/oauth1_twitter.php
+
+# 3. Start the PHP built-in Web-Server
+$ php -S localhost:8080 -t docs/demo/www
+
+# 4. Access http://localhost:8080/oauth1_twitter.php
+```
+
+#### OAuth2 (Facebook)
+
+See ```docs/demo/www/oauth2_facebook.php``` for detail.
+
+```php
+# 1. Create and configure the Facebook App on Developer Website
+
+# 2. Set App ID and Secret in docs/demo/www/oauth2_facebook.php
+
+# 3. Start the PHP built-in Web-Server
+$ php -S localhost:8080 -t docs/demo/www
+
+# 4. Access http://localhost:8080/oauth2_facebook.php
 ```
 
 ### Requirements
