@@ -101,6 +101,10 @@ See ```docs/demo/www/oauth1_twitter.php``` for detail.
 $ php -S localhost:8080 -t docs/demo/www
 
 # 4. Access http://localhost:8080/oauth1_twitter.php
+<< output >>
+user_id: {Your User ID}
+screen_name: @{your_screen_name}
+name: {Your Name}
 ```
 
 #### OAuth2 (Facebook)
@@ -116,6 +120,9 @@ See ```docs/demo/www/oauth2_facebook.php``` for detail.
 $ php -S localhost:8080 -t docs/demo/www
 
 # 4. Access http://localhost:8080/oauth2_facebook.php
+<< output >>
+id: {Your ID}
+name: {Your Name}
 ```
 
 ### Requirements
