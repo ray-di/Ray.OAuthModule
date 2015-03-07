@@ -1,4 +1,9 @@
 <?php
+/**
+ * This file is part of the Ray.OAuthModule package
+ *
+ * @license http://opensource.org/licenses/mit-license.php MIT
+ */
 
 require dirname(__DIR__) . '/vendor/autoload.php';
 
