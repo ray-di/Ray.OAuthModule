@@ -22,4 +22,4 @@ class OAuth2ModuleTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf(OAuth2ClientInterface::class, $consumer->getClient());
         $this->assertEquals(OAuth2Service::FACEBOOK, $consumer->getClient()->getServiceName());
     }
-} 
+}

@@ -16,4 +16,4 @@ use Ray\Di\Di\Qualifier;
 class OAuth1Config
 {
     public $value;
-} 
+}

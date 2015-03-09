@@ -83,7 +83,7 @@ class OAuthController
         $me = json_decode($me);
 
         $result = 'id : ' . $me->id .'<br />';
-        $result.= 'name : ' . $me->name;
+        $result .= 'name : ' . $me->name;
 
         return $result;
     }
@@ -97,7 +97,6 @@ $controller = (new Injector(new AppModule))->getInstance(OAuthController::class)
 
 if (empty($_GET)) {
     $controller->redirectAction();
-
 } else {
     $result = $controller->callbackAction($_GET['code']);
     echo $result;

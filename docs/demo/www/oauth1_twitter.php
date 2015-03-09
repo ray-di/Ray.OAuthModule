@@ -86,8 +86,8 @@ class OAuthController
         $user = json_decode($user);
 
         $result = 'user_id : ' . $userId .'<br />';
-        $result.= 'screen_name : @' . $screenName . '<br />';
-        $result.= 'name: ' . $user->name;
+        $result .= 'screen_name : @' . $screenName . '<br />';
+        $result .= 'name: ' . $user->name;
 
         return $result;
     }
@@ -101,7 +101,6 @@ $controller = (new Injector(new AppModule))->getInstance(OAuthController::class)
 
 if (empty($_GET)) {
     $controller->redirectAction();
-
 } else {
     $result = $controller->callbackAction($_GET['oauth_token'], $_GET['oauth_verifier'], $_GET['denied']);
     echo $result;
