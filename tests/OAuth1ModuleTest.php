@@ -21,4 +21,4 @@ class OAuth1ModuleTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf(OAuth1ClientInterface::class, $consumer->getClient());
         $this->assertEquals(OAuth1Service::TWITTER, $consumer->getClient()->getServiceName());
     }
-} 
+}

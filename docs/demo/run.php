@@ -25,10 +25,9 @@ $_SERVER['REQUEST_URI'] = 'http://127.0.0.1:8080/';
 $_ENV['CONSUMER_KEY'] = 'Consumer Key of your twitter app';
 $_ENV['CONSUMER_SECRET'] = 'Consumer Secret of your twitter app';
 
-
 $module = new OAuth1Module(OAuth1Service::TWITTER, $_ENV['CONSUMER_KEY'], $_ENV['CONSUMER_SECRET'], '/callback/twitter');
 /** @var Fake $fake */
 $fake = (new Injector($module))->getInstance(Fake::class);
 $works = ($fake->getTwitterOAuth() instanceof OAuth1ClientInterface);
 
-echo ($works ? 'It works!' : 'It DOES NOT work!') . PHP_EOL;
+echo($works ? 'It works!' : 'It DOES NOT work!') . PHP_EOL;

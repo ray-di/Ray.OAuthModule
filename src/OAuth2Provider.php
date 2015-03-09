@@ -37,6 +37,6 @@ class OAuth2Provider implements ProviderInterface
     {
         list($serviceName, $consumerKey, $consumerSecret, $callbackUrlPath, $scopes, $extraAuthParams) = $this->config;
 
-        return new OAuth2Client($serviceName, $consumerKey, $consumerSecret,$callbackUrlPath, $scopes, $extraAuthParams);
+        return new OAuth2Client($serviceName, $consumerKey, $consumerSecret, $callbackUrlPath, $scopes, $extraAuthParams);
     }
 }
