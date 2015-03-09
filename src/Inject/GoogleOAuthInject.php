@@ -27,4 +27,4 @@ trait GoogleOAuthInject
     {
         $this->googleOAuth = $client;
     }
-} 
+}

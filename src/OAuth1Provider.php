@@ -37,6 +37,6 @@ class OAuth1Provider implements ProviderInterface
     {
         list($serviceName, $consumerKey, $consumerSecret, $callbackUrlPath, $extraAuthParams) = $this->config;
 
-        return new OAuth1Client($serviceName, $consumerKey, $consumerSecret,$callbackUrlPath, $extraAuthParams);
+        return new OAuth1Client($serviceName, $consumerKey, $consumerSecret, $callbackUrlPath, $extraAuthParams);
     }
 }

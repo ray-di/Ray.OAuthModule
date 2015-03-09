@@ -27,4 +27,4 @@ trait FacebookOAuthInject
     {
         $this->facebookOAuth = $client;
     }
-} 
+}

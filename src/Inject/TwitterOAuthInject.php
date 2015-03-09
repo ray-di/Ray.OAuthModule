@@ -27,4 +27,4 @@ trait TwitterOAuthInject
     {
         $this->twitterOAuth = $client;
     }
-} 
+}

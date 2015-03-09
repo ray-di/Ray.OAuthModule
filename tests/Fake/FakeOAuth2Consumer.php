@@ -35,4 +35,4 @@ class FakeOAuth2Consumer
     {
         return $this->client;
     }
-} 
+}
