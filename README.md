@@ -1,9 +1,9 @@
-ray/oauth-module
+Ray.OAuthModule
 ================
 
 [![Build Status](https://travis-ci.org/ray-di/Ray.OAuthModule.svg?branch=master)](https://travis-ci.org/ray-di/Ray.OAuthModule)
 
-[OAuth](https://github.com/Lusitanian/PHPoAuthLib) Module for [Ray.Di](https://github.com/ray-di/Ray.Di)
+[OAuth](https://github.com/kawanamiyuu/Maye.OAuthClient) Module for [Ray.Di](https://github.com/ray-di/Ray.Di)
 
 ## Installation
 
@@ -15,59 +15,117 @@ $ composer require ray/oauth-module
  
 ### Module install
 
-**e.g. TwitterModule**
-
 ```php
 use Ray\Di\AbstractModule;
-use Ray\OAuthModule\Twitter\TwitterModule;
+use Ray\OAuthModule\OAuth1Module;
+use Ray\OAuthModule\OAuth1Service;
 
 class AppModule extends AbstractModule
 {
 	protected function configure()
 	{
-		// Callback URL Path of your application
-		$callbackUrlPath = '/oauth/twitter/callback';
-		$this->install(new TwitterModule('{YOUR_CONSUMER_KEY}', '{YOUR_CONSUMER_SECRET}', $callbackUrlPath);
+		$this->install(new OAuth1Module(OAuth1Service::TWITTER, $_ENV['CONSUMER_KEY'], $_ENV['CONSUMER_SECRET'], '/oauth/callback'));
 	}
 }
-
 ```
-### DI trait
 
-**e.g. TwitterInject**
+### Usage
+
+Redirects to the authorization page.
 
 ```php
+use Ray\OAuthModule\Inject\TwitterOAuthInject;
 
-use Ray\OAuthModule\Twitter\TwitterInject;
-
-class AuthController extends AbstractController
+class OAuthController
 {
-    use TwitterInject;
-    
-    public function indexAction()
+    use TwitterOAuthInject;
+
+    public function redirectAction()
     {
-        $requestToken = $this->twitterOAuthClient->requestRequestToken()->getRequestToken();
-        $url = $this->twitterOAuthClient->getAuthorizationUri([
-            'oauth_token' => $requestToken,
-            'force_login' => 'true'
-        ]);
-        // redirect to Twitter authorize URL
-        header('Location:' . $url);
-        exit(0);
+        $this->twitterOAuth->authorize();
     }
 }
-
 ```
 
-### Requiuments
+Requests the AccessToken.
+This is callback process after authorization finished.
 
- * PHP 5.5+
- * hhvm
- 
-## Other Services?
+```php
+use Ray\OAuthModule\Inject\TwitterOAuthInject;
 
-If you need other [OAuth1](https://github.com/Lusitanian/PHPoAuthLib/tree/master/src/OAuth/OAuth1/Service)/[OAuth2](https://github.com/Lusitanian/PHPoAuthLib/tree/master/src/OAuth/OAuth2/Service) service module, for example "Tumblr" (OAuth1), 
+class OAuthController
+{
+    use TwitterOAuthInject;
 
-1. Add TumblrModle class and TumblrInject trait.
+    public function callbackAction()
+    {
+        if ($_GET['denied']) {
+            // should be handled as error
+            return 'ERROR';
+        }
 
-1. Send a Pull Request.
+        // requests AccessToken
+        $token = $this->twitterOAuth->requestAccessToken($_GET['oauth_token'], $_GET['oauth_verifier']);
+        /** @var OAuth\OAuth1\Token\TokenInterface $token */
+
+        // $accessToken       = $token->getAccessToken();
+        // $accessTokenSecret = $token->getAccessTokenSecret();
+        $userId     = $token->getExtraParams()['user_id'];
+        $screenName = $token->getExtraParams()['screen_name'];
+
+        // gets authorized user info
+        $user = $this->twitterOAuth->api('get', 'users/show.json', ['user_id' => $userId]);
+        $user = json_decode($user);
+
+        $result = 'user_id : ' . $userId .'<br />';
+        $result.= 'screen_name : @' . $screenName . '<br />';
+        $result.= 'name: ' . $user->name;
+
+        return $result;
+    }
+}
+```
+
+## Demo
+
+#### OAuth1 (Twitter)
+
+See ```docs/demo/www/oauth1_twitter.php``` for detail.
+
+```php
+# 1. Create and configure the Twitter App on Developer Website
+
+# 2. Set Consumer Key and Secret in docs/demo/www/oauth1_twitter.php
+
+# 3. Start the PHP built-in Web-Server
+$ php -S localhost:8080 -t docs/demo/www
+
+# 4. Access http://localhost:8080/oauth1_twitter.php
+<< output >>
+user_id: {Your User ID}
+screen_name: @{your_screen_name}
+name: {Your Name}
+```
+
+#### OAuth2 (Facebook)
+
+See ```docs/demo/www/oauth2_facebook.php``` for detail.
+
+```php
+# 1. Create and configure the Facebook App on Developer Website
+
+# 2. Set App ID and Secret in docs/demo/www/oauth2_facebook.php
+
+# 3. Start the PHP built-in Web-Server
+$ php -S localhost:8080 -t docs/demo/www
+
+# 4. Access http://localhost:8080/oauth2_facebook.php
+<< output >>
+id: {Your ID}
+name: {Your Name}
+```
+
+### Requirements
+
+* PHP 5.5+
+* hhvm
