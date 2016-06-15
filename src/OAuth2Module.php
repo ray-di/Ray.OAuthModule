@@ -8,6 +8,7 @@ namespace Ray\OAuthModule;
 
 use Doctrine\Common\Annotations\AnnotationRegistry;
 use Maye\OAuthClient\OAuth2ClientInterface;
+use OAuth\Common\Storage\TokenStorageInterface;
 use Ray\Di\AbstractModule;
 use Ray\Di\Scope;
 use Ray\OAuthModule\Annotation\OAuth2Config;
@@ -26,13 +27,15 @@ class OAuth2Module extends AbstractModule
      * @param string $callbackUrlPath Callback url path
      * @param array  $scopes          Scopes
      * @param array  $extraAuthParams Extra authorization params
+     * @param TokenStorageInterface $storage Token Storage
      */
-    public function __construct($serviceName, $consumerKey, $consumerSecret, $callbackUrlPath, array $scopes = [], array $extraAuthParams = [])
+    public function __construct($serviceName, $consumerKey, $consumerSecret, $callbackUrlPath,
+                                array $scopes = [], array $extraAuthParams = [], TokenStorageInterface $storage = null)
     {
         $this->serviceName = $serviceName;
 
         AnnotationRegistry::registerFile(__DIR__ . '/DoctrineAnnotations.php');
-        $this->bind()->annotatedWith(OAuth2Config::class)->toInstance([$serviceName, $consumerKey, $consumerSecret, $callbackUrlPath, $scopes, $extraAuthParams]);
+        $this->bind()->annotatedWith(OAuth2Config::class)->toInstance([$serviceName, $consumerKey, $consumerSecret, $callbackUrlPath, $scopes, $extraAuthParams, $storage]);
     }
 
     /**
