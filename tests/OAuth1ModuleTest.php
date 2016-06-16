@@ -14,8 +14,7 @@ class OAuth1ModuleTest extends \PHPUnit_Framework_TestCase
 {
     public function testOAuth1Module()
     {
-        $module = new OAuth1Module(
-            OAuth1Service::TWITTER, 'ConsumerKey', 'ConsumerSecret', 'CallbackUrlPath', [], new FakeTokenStorage);
+        $module = new OAuth1Module(OAuth1Service::TWITTER, 'ConsumerKey', 'ConsumerSecret', 'CallbackUrlPath', [], new FakeTokenStorage);
         $injector = (new Injector($module, $_ENV['TMP_DIR']));
         /** @var FakeOAuth1Consumer $consumer */
         $consumer = $injector->getInstance(FakeOAuth1Consumer::class);

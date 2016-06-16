@@ -73,7 +73,7 @@ class OAuthController
 
         // requests AccessToken
         $token = $this->facebookOAuth->requestAccessToken($code);
-        /** @var OAuth\OAuth2\Token\TokenInterface $token */
+        /* @var OAuth\OAuth2\Token\TokenInterface $token */
 
         // $accessToken = $token->getAccessToken();
         // $refreshToken = $token->getRefreshToken();

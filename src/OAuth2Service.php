@@ -14,7 +14,6 @@ class OAuth2Service
      * the following services are available:
      * https://github.com/Lusitanian/PHPoAuthLib/tree/master/src/OAuth/OAuth2/Service
      */
-
     const FACEBOOK = 'Facebook';
 
     const GIT_HUB = 'GitHub';

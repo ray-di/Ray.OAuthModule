@@ -21,16 +21,21 @@ class OAuth1Module extends AbstractModule
     private $serviceName;
 
     /**
-     * @param string $serviceName     Service name
-     * @param string $consumerKey     Consumer key
-     * @param string $consumerSecret  Consumer secret
-     * @param string $callbackUrlPath Callback url path
-     * @param array  $extraAuthParams Extra authorization params
-     * @param TokenStorageInterface $storage Token Storage
+     * @param string                $serviceName     Service name
+     * @param string                $consumerKey     Consumer key
+     * @param string                $consumerSecret  Consumer secret
+     * @param string                $callbackUrlPath Callback url path
+     * @param array                 $extraAuthParams Extra authorization params
+     * @param TokenStorageInterface $storage         Token Storage
      */
-    public function __construct($serviceName, $consumerKey, $consumerSecret, $callbackUrlPath,
-                                array $extraAuthParams = [], TokenStorageInterface $storage = null)
-    {
+    public function __construct(
+        $serviceName,
+        $consumerKey,
+        $consumerSecret,
+        $callbackUrlPath,
+        array $extraAuthParams = [],
+        TokenStorageInterface $storage = null
+    ) {
         $this->serviceName = $serviceName;
 
         AnnotationRegistry::registerFile(__DIR__ . '/DoctrineAnnotations.php');
