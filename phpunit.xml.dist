@@ -20,6 +20,8 @@
         <whitelist>
             <directory suffix=".php">src</directory>
             <exclude>
+                <directory>src/Annotation</directory>
+                <directory>src/Inject</directory>
                 <file>src/DoctrineAnnotations.php</file>
             </exclude>
         </whitelist>

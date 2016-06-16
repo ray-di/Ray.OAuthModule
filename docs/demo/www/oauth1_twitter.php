@@ -74,7 +74,7 @@ class OAuthController
 
         // requests AccessToken
         $token = $this->twitterOAuth->requestAccessToken($oauth_token, $oauth_verifier);
-        /** @var OAuth\OAuth1\Token\TokenInterface $token */
+        /* @var OAuth\OAuth1\Token\TokenInterface $token */
 
         // $accessToken       = $token->getAccessToken();
         // $accessTokenSecret = $token->getAccessTokenSecret();

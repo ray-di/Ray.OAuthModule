@@ -14,6 +14,5 @@ class OAuth1Service
      * the following services are available:
      * https://github.com/Lusitanian/PHPoAuthLib/tree/master/src/OAuth/OAuth1/Service
      */
-
     const TWITTER = 'Twitter';
 }

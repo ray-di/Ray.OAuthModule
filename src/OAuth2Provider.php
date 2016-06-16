@@ -35,8 +35,8 @@ class OAuth2Provider implements ProviderInterface
      */
     public function get()
     {
-        list($serviceName, $consumerKey, $consumerSecret, $callbackUrlPath, $scopes, $extraAuthParams) = $this->config;
+        list($serviceName, $consumerKey, $consumerSecret, $callbackUrlPath, $scopes, $extraAuthParams, $storage) = $this->config;
 
-        return new OAuth2Client($serviceName, $consumerKey, $consumerSecret, $callbackUrlPath, $scopes, $extraAuthParams);
+        return new OAuth2Client($serviceName, $consumerKey, $consumerSecret, $callbackUrlPath, $scopes, $extraAuthParams, $storage);
     }
 }

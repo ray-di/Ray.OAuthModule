@@ -18,7 +18,7 @@ class Fake
     }
 }
 
-/**
+/*
  * (Emulates $_SERVER and $_ENV variables for CLI)
  */
 $_SERVER['REQUEST_URI'] = 'http://127.0.0.1:8080/';
