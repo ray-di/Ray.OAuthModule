@@ -23,8 +23,10 @@
 	},
 	"autoload-dev":{
 		"psr-4":{
-			"Ray\\OAuthModule\\": "tests/",
-			"Ray\\OAuthModule\\": "tests/Fake"
+			"Ray\\OAuthModule\\": [
+				"tests/",
+				"tests/Fake"
+			]
 		}
 	},
 	"scripts": {
