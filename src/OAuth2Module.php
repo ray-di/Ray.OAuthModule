@@ -6,12 +6,10 @@
  */
 namespace Ray\OAuthModule;
 
-use Doctrine\Common\Annotations\AnnotationRegistry;
+use Maye\OAuthClient\OAuth2Client;
 use Maye\OAuthClient\OAuth2ClientInterface;
 use OAuth\Common\Storage\TokenStorageInterface;
 use Ray\Di\AbstractModule;
-use Ray\Di\Scope;
-use Ray\OAuthModule\Annotation\OAuth2Config;
 
 class OAuth2Module extends AbstractModule
 {
@@ -19,6 +17,36 @@ class OAuth2Module extends AbstractModule
      * @var string
      */
     private $serviceName;
+
+    /**
+     * @var string
+     */
+    private $consumerKey;
+
+    /**
+     * @var string
+     */
+    private $consumerSecret;
+
+    /**
+     * @var string
+     */
+    private $callbackUrlPath;
+
+    /**
+     * @var array
+     */
+    private $scopes;
+
+    /**
+     * @var array
+     */
+    private $extraAuthParams;
+
+    /**
+     * @var TokenStorageInterface
+     */
+    private $storage;
 
     /**
      * @param string                $serviceName     Service name
@@ -39,9 +67,12 @@ class OAuth2Module extends AbstractModule
         TokenStorageInterface $storage = null
     ) {
         $this->serviceName = $serviceName;
-
-        AnnotationRegistry::registerFile(__DIR__ . '/DoctrineAnnotations.php');
-        $this->bind()->annotatedWith(OAuth2Config::class)->toInstance([$serviceName, $consumerKey, $consumerSecret, $callbackUrlPath, $scopes, $extraAuthParams, $storage]);
+        $this->consumerKey = $consumerKey;
+        $this->consumerSecret = $consumerSecret;
+        $this->callbackUrlPath = $callbackUrlPath;
+        $this->scopes = $scopes;
+        $this->extraAuthParams = $extraAuthParams;
+        $this->storage = $storage;
     }
 
     /**
@@ -49,8 +80,26 @@ class OAuth2Module extends AbstractModule
      */
     protected function configure()
     {
-        $named = strtolower($this->serviceName);
+        $qualifier = strtolower($this->serviceName);
 
-        $this->bind(OAuth2ClientInterface::class)->annotatedWith($named)->toProvider(OAuth2Provider::class)->in(Scope::SINGLETON);
+        $this->bind(OAuth2ClientInterface::class)
+            ->annotatedWith($qualifier)
+            ->toConstructor(OAuth2Client::class, [
+                'serviceName' => "{$qualifier}_oauth_serviceName",
+                'consumerKey' => "{$qualifier}_oauth_consumerKey",
+                'consumerSecret' => "{$qualifier}_oauth_consumerSecret",
+                'callbackUrlPath' => "{$qualifier}_oauth_callbackUrlPath",
+                'scopes' => "{$qualifier}_oauth_scopes",
+                'extraParams' => "{$qualifier}_oauth_extraParams",
+                'storage' => "{$qualifier}_oauth_storage"
+            ]);
+
+        $this->bind()->annotatedWith("{$qualifier}_oauth_serviceName")->toInstance($this->serviceName);
+        $this->bind()->annotatedWith("{$qualifier}_oauth_consumerKey")->toInstance($this->consumerKey);
+        $this->bind()->annotatedWith("{$qualifier}_oauth_consumerSecret")->toInstance($this->consumerSecret);
+        $this->bind()->annotatedWith("{$qualifier}_oauth_callbackUrlPath")->toInstance($this->callbackUrlPath);
+        $this->bind()->annotatedWith("{$qualifier}_oauth_scopes")->toInstance($this->scopes);
+        $this->bind()->annotatedWith("{$qualifier}_oauth_extraParams")->toInstance($this->extraAuthParams);
+        $this->bind(TokenStorageInterface::class)->annotatedWith("{$qualifier}_oauth_storage")->toInstance($this->storage);
     }
 }
