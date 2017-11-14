@@ -124,8 +124,3 @@ $ php -S localhost:8080 -t docs/demo/www
 id: {Your ID}
 name: {Your Name}
 ```
-
-### Requirements
-
-* PHP 5.5+
-* hhvm

@@ -4,7 +4,7 @@
 	"keywords": ["Ray.Di", "OAuth"],
 	"license": "MIT",
 	"require": {
-		"php": ">=5.5.0",
+		"php": ">=7.0",
 		"ray/di": "~2.6",
 		"maye/oauth-client": "~1.3"
 	},
