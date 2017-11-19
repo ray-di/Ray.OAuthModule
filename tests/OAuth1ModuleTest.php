@@ -8,9 +8,10 @@ namespace Ray\OAuthModule;
 
 use Maye\OAuthClient\OAuth1ClientInterface;
 use OAuth\Common\Storage\TokenStorageInterface;
+use PHPUnit\Framework\TestCase;
 use Ray\Di\Injector;
 
-class OAuth1ModuleTest extends \PHPUnit_Framework_TestCase
+class OAuth1ModuleTest extends TestCase
 {
     public function testOAuth1Module()
     {
