@@ -26,6 +26,15 @@ class OAuth2ModuleTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf(FakeTokenStorage::class, $this->getStorage($consumer->getClient()));
     }
 
+    public function testInjectMultipleOAuth2()
+    {
+        $consumer = (new Injector(new FakeMultipleOAuthModule, $_ENV['TMP_DIR']))->getInstance(FakeMultipleOAuthConsumer::class);
+        /* @var $consumer FakeMultipleOAuthConsumer */
+
+        $this->assertSame(OAuth2Service::FACEBOOK, $consumer->getFacebookOAuth()->getServiceName());
+        $this->assertSame(OAuth2Service::GOOGLE, $consumer->getGoogleOAuth()->getServiceName());
+    }
+
     /**
      * @param OAuth2ClientInterface $client
      *

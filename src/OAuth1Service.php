@@ -15,4 +15,6 @@ class OAuth1Service
      * https://github.com/Lusitanian/PHPoAuthLib/tree/master/src/OAuth/OAuth1/Service
      */
     const TWITTER = 'Twitter';
+
+    const YAHOO = 'Yahoo';
 }
