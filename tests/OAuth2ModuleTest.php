@@ -9,9 +9,10 @@ namespace Ray\OAuthModule;
 use Maye\OAuthClient\OAuth2ClientInterface;
 use OAuth\Common\Storage\TokenStorageInterface;
 use OAuth\OAuth2\Service\Facebook;
+use PHPUnit\Framework\TestCase;
 use Ray\Di\Injector;
 
-class OAuth2ModuleTest extends \PHPUnit_Framework_TestCase
+class OAuth2ModuleTest extends TestCase
 {
     public function testOAuth2Module()
     {
