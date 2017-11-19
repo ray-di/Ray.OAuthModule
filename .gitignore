@@ -1,5 +1,6 @@
-.idea
-build
-vendor
+.idea/
+build/
+vendor/
+.php_cs.cache
 composer.lock
 Ray.OAuthModule.iml
